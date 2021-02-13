@@ -84,6 +84,10 @@ public class BlockGenericFixture extends BlockLight implements ITOPInfoProvider 
         if (tileEntity instanceof TileEntityGenericFixture) {
             TileEntityGenericFixture pipe = (TileEntityGenericFixture) tileEntity;
             pipe.getCapability(TheatricalPower.CAP, null).ifPresent(iTheatricalPowerStorage -> iProbeInfo.text(new StringTextComponent("Power: " + iTheatricalPowerStorage.getEnergyStored())));
+            if(pipe.getGel() != null) {
+                iProbeInfo.text(new StringTextComponent("Gel:"));
+                iProbeInfo.item(pipe.getGel());
+            }
         }
     }
 }

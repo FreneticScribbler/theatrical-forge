@@ -382,7 +382,6 @@ public abstract class TileEntityFixture extends TileEntity implements IFixture, 
         return getFixture().getRayTraceRotation();
     }
 
-
     @Override
     public void tick() {
         prevFocus = focus;

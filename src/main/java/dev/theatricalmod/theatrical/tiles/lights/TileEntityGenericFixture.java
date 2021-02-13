@@ -5,9 +5,11 @@ import dev.theatricalmod.theatrical.api.IAcceptsCable;
 import dev.theatricalmod.theatrical.api.capabilities.power.ITheatricalPowerStorage;
 import dev.theatricalmod.theatrical.api.capabilities.power.TheatricalPower;
 import dev.theatricalmod.theatrical.api.fixtures.Fixture;
+import dev.theatricalmod.theatrical.api.fixtures.IRGB;
 import dev.theatricalmod.theatrical.block.BlockHangable;
 import dev.theatricalmod.theatrical.block.light.BlockGenericFixture;
 import dev.theatricalmod.theatrical.client.gui.container.ContainerGenericFixture;
+import dev.theatricalmod.theatrical.items.ItemGelFrame;
 import dev.theatricalmod.theatrical.tiles.TheatricalTiles;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -15,6 +17,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.IDyeableArmorItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
@@ -25,7 +29,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TileEntityGenericFixture extends TileEntityFixture implements INamedContainerProvider, ITheatricalPowerStorage, IAcceptsCable {
+public class TileEntityGenericFixture extends TileEntityFixture implements INamedContainerProvider, ITheatricalPowerStorage, IAcceptsCable, IRGB {
 
     public int lastPower = 0;
     public int energyUsage, energyCost;
@@ -35,6 +39,8 @@ public class TileEntityGenericFixture extends TileEntityFixture implements IName
     private final int maxExtract = 255;
 
     private Entity trackingEntity;
+
+    private static ItemStack currentGel;
 
     public TileEntityGenericFixture() {
         super(TheatricalTiles.GENERIC_LIGHT.get());
@@ -53,6 +59,9 @@ public class TileEntityGenericFixture extends TileEntityFixture implements IName
     public CompoundNBT getNBT(@Nullable CompoundNBT compoundNBT) {
         CompoundNBT compoundNBT1 = super.getNBT(compoundNBT);
         compoundNBT1.putInt("lastPower", lastPower);
+        if(currentGel != null) {
+            compoundNBT1.put("gel", currentGel.serializeNBT());
+        }
         return compoundNBT1;
     }
 
@@ -61,6 +70,9 @@ public class TileEntityGenericFixture extends TileEntityFixture implements IName
         super.readNBT(compoundNBT);
         if (compoundNBT.contains("lastPower")) {
             lastPower = compoundNBT.getInt("lastPower");
+        }
+        if(compoundNBT.contains("gel")) {
+            currentGel = ItemStack.read(compoundNBT.getCompound("gel"));
         }
     }
 
@@ -215,5 +227,29 @@ public class TileEntityGenericFixture extends TileEntityFixture implements IName
     @Override
     public CableType[] getAcceptedCables(Direction side) {
         return new CableType[]{CableType.DIMMED_POWER};
+    }
+
+    @Override
+    public int getColorHex() {
+        if(currentGel != null && currentGel.getItem() instanceof ItemGelFrame) {
+            return ((IDyeableArmorItem)currentGel.getItem()).getColor(currentGel.getStack());
+        }
+        return 0;
+    }
+
+    public ItemStack getGel() {
+        return currentGel;
+    }
+
+    public void removeGel() {
+        currentGel = null;
+    }
+
+    public boolean setGel(ItemStack item)  {
+        if(currentGel != null) {
+            return false;
+        }
+        currentGel = item;
+        return true;
     }
 }
