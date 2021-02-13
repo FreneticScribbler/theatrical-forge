@@ -28,12 +28,14 @@ public class TheatricalUSLangProvider extends LanguageProvider {
         this.addBlock(TheatricalBlocks.DIMMED_POWER_CABLE, "Dimmed Power Cable");
         this.addBlock(TheatricalBlocks.BASIC_LIGHTING_DESK, "Basic Lighting Desk");
         this.addBlock(TheatricalBlocks.DMX_REDSTONE_INTERFACE, "DMX-Redstone Interface");
+
         this.addItem(TheatricalItems.POSITIONER, "Remote Light Positioner");
         this.addItem(TheatricalItems.COG, "Mechanical Cog");
         this.addItem(TheatricalItems.LED, "LED");
         this.addItem(TheatricalItems.MOTOR, "Electrical Motor");
         this.addItem(TheatricalItems.BULB, "Tungsten Bulb");
         this.addItem(TheatricalItems.WRENCH, "Wrench");
+        this.addItem(TheatricalItems.GEL_FRAME, "Gel Frame");
 
         this.add(TheatricalBookProvider.NAME_KEY, "Theatrical Guide");
         this.add(TheatricalBookProvider.DESC_KEY, "On the art of theatrics");

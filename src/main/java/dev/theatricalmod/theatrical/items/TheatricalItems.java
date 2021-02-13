@@ -37,6 +37,7 @@ public class TheatricalItems {
      */
     public static final RegistryObject<Item> POSITIONER = ITEMS.register("positioner", () -> new ItemPositioner(BASE_PROPERTIES));
     public static final RegistryObject<Item> WRENCH = ITEMS.register("wrench", () -> new ItemWrench(BASE_PROPERTIES));
+    public static final RegistryObject<Item> GEL_FRAME = ITEMS.register("gel_frame", () -> new ItemGelFrame(BASE_PROPERTIES));
 
     /**
      * Recipe ingredients

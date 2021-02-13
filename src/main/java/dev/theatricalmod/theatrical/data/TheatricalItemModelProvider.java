@@ -13,5 +13,7 @@ public class TheatricalItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         this.singleTexture("guide", mcLoc("item/generated"), "layer0", modLoc("item/guide"));
+        this.withExistingParent("gel_frame", mcLoc("item/generated"))
+        .texture("layer0", modLoc("item/gel")).texture("layer1", modLoc("item/gel_frame"));
     }
 }

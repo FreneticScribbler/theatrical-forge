@@ -14,7 +14,6 @@ import net.minecraft.world.World;
 
 public class ItemPositioner extends Item {
 
-
     public ItemPositioner(Item.Properties properties) {
         super(properties);
     }

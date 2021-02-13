@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "theatrical:item/gel",
+    "layer1": "theatrical:item/gel_frame"
+  }
+}

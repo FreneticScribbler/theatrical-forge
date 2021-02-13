@@ -11,14 +11,18 @@ import dev.theatricalmod.theatrical.client.gui.container.TheatricalContainers;
 import dev.theatricalmod.theatrical.client.gui.screen.*;
 import dev.theatricalmod.theatrical.client.tile.TileEntityRendererBasicLightingDesk;
 import dev.theatricalmod.theatrical.entity.TheatricalEntities;
+import dev.theatricalmod.theatrical.items.TheatricalItems;
 import dev.theatricalmod.theatrical.tiles.TheatricalTiles;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.IDyeableArmorItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -27,6 +31,7 @@ import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -51,6 +56,11 @@ public class TheatricalClient extends TheatricalCommon {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::textureStitch);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::modelLoad);
         MinecraftForge.EVENT_BUS.addListener(this::worldRenderLastEvent);
+    }
+
+    @SubscribeEvent
+    public static void itemColors(ColorHandlerEvent.Item event){
+        event.getItemColors().register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((IDyeableArmorItem)stack.getItem()).getColor(stack),TheatricalItems.GEL_FRAME.get());
     }
 
     @SubscribeEvent
